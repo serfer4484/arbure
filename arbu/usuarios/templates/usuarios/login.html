@@ -1,0 +1,75 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+
+<html lang="es">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Gestion Empleados</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f6fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .login-container img {
+            width: 130px;
+            margin-right: 10px;
+        }
+    </style>
+  </head>
+
+
+  <div class="login-container text-center">
+    <img src="{% static 'img/logo.png' %}" alt="Logo" class="logo">
+    {% comment %} <h3 class="mb-4">Plusadmin</h3> {% endcomment %}
+    <h6 class="mb-3">Bienvenido</h6>
+    <p class="text-muted">Inicie sesión para continuar.</p>
+
+    <form action="{% url 'login' %}" method="post" class="my-8">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+    </form>
+</div>
+
+<script src="{% static 'assets/js/dashboard.js' %}"></script>
+    <!-- plugins:js -->
+    <script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="{% static 'assets/vendors/jquery-bar-rating/jquery.barrating.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/chart.js/chart.umd.js' %}"></script>
+    <script src="{% static 'assets/vendors/flot/jquery.flot.js' %}"></script>
+    <script src="{% static 'assets/vendors/flot/jquery.flot.resize.js' %}"></script>
+    <script src="{% static 'assets/vendors/flot/jquery.flot.categories.js' %}"></script>
+    <script src="{% static 'assets/vendors/flot/jquery.flot.fillbetween.js' %}"></script>
+    <script src="{% static 'assets/vendors/flot/jquery.flot.stack.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.cookie.js" type="text/javascriptv' %}"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="{% static 'assets/js/off-canvas.js' %}"></script>
+    <script src="{% static 'assets/js/misc.js' %}"></script>
+    <script src="{% static 'assets/js/settings.js' %}"></script>
+    <script src="{% static 'assets/js/todolist.js' %}"></script>
+    <script src="{% static 'assets/js/hoverable-collapse.js' %}"></script>
+    <!-- endinject -->
+    <script rc="{% static 'js/home.js' %}"></script>
+    {% block customJS %} {% endblock %}
+    <!-- End custom js for this page -->
+  </body>
+</html>

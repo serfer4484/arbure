@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid"> <!-- Añadido un contenedor fluido para ocupar toda la pantalla -->
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8 mb-2"> <!-- Ajuste para hacerlo responsivo según el tamaño de pantalla -->
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-center text-uppercase">¿Está seguro de que desea eliminar este empleado?<hr /></h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger">Eliminar</button>
+                        <a class="btn btn-outline-warning" href="{% url 'lista_empleado' %}">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

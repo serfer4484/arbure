@@ -1,0 +1,124 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="es">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Gestion Empleados</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="{% static 'assets/dist/assets/vendors/mdi/css/materialdesignicons.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'assets/dist/assets/vendors/ti-icons/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/dist/assets/vendors/css/vendor.bundle.base.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/dist/assets/vendors/font-awesome/css/font-awesome.min.css' %}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="{% static 'assets/dist/assets/vendors/jquery-bar-rating/css-stars.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/dist/assets/vendors/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/dist/assets/css/style.css' %}">
+    <!-- End layout styles -->
+  </head>
+
+  <body>
+    <header>
+
+  </header>
+    <div class="container-scroller">      
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item nav-profile border-bottom">
+            <a href="#" class="nav-link flex-column">
+              <div class="nav-profile-image">
+                <img src="{% static 'img/logo.png' %}" alt="Logo" class="w-12 h-20">
+                <!--change to offline or busy as needed-->
+              </div>
+              <div class="nav-profile-text d-flex ms-0 mb-3 flex-column">
+                <span class="fw-semibold mb-1 mt-2 text-center">Hola, {% if user.is_authenticated %}
+                  {{ user.username }}
+                  {% endif %}</span>
+              </div> 
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url "lista_empleado" %}">
+              <i class="mdi mdi-compass-outline menu-icon"></i>
+              <span class="menu-title">Inicio</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="{% url "lista_empleado" %}" aria-expanded="false" aria-controls="ui-basic">
+              <i class="mdi mdi-contacts menu-icon"></i>
+              <span class="menu-title">Empleados</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="{% url "reporteEmpleados" %}" aria-expanded="false" aria-controls="ui-basic">
+              <i class="mdi mdi-microsoft-excel menu-icon"></i>
+              <span class="menu-title">Reporte Empleados</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="{% url "lista_novedades" %}" aria-expanded="false" aria-controls="icons">
+              <i class="mdi mdi-view-headline menu-icon"></i>
+              <span class="menu-title">Novedades</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="{% url "lista_turnos_semana" %}" aria-expanded="false" aria-controls="forms">
+              <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+              <span class="menu-title">Turnos</span>
+            </a>
+          </li>
+          {% comment %} <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#" aria-expanded="false" aria-controls="charts">
+              <i class="mdi mdi-smart-card menu-icon"></i>
+              <span class="menu-title">Usuarios</span>
+            </a>
+          </li> {% endcomment %}
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="{% url 'login' %}" aria-expanded="false" aria-controls="charts">
+              <i class="mdi mdi-exit-to-app menu-icon"></i>
+              <span class="menu-title">Salir</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_navbar.html -->
+        <!-- partial -->
+        {% block content %}{% endblock content %}
+
+        <!-- main-panel ends -->
+      </div>
+    </div>
+    <script src="{% static 'assets/js/dashboard.js' %}"></script>
+    <!-- plugins:js -->
+    <script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="{% static 'assets/vendors/jquery-bar-rating/jquery.barrating.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/chart.js/chart.umd.js' %}"></script>
+    <script src="{% static 'assets/vendors/flot/jquery.flot.js' %}"></script>
+    <script src="{% static 'assets/vendors/flot/jquery.flot.resize.js' %}"></script>
+    <script src="{% static 'assets/vendors/flot/jquery.flot.categories.js' %}"></script>
+    <script src="{% static 'assets/vendors/flot/jquery.flot.fillbetween.js' %}"></script>
+    <script src="{% static 'assets/vendors/flot/jquery.flot.stack.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.cookie.js" type="text/javascriptv' %}"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="{% static 'assets/js/off-canvas.js' %}"></script>
+    <script src="{% static 'assets/js/misc.js' %}"></script>
+    <script src="{% static 'assets/js/settings.js' %}"></script>
+    <script src="{% static 'assets/js/todolist.js' %}"></script>
+    <script src="{% static 'assets/js/hoverable-collapse.js' %}"></script>
+    <!-- endinject -->
+    <script rc="{% static 'js/home.js' %}"></script>
+    {% block customJS %} {% endblock %}
+    <!-- End custom js for this page -->
+  </body>
+</html>

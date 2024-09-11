@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block content %}{% load static %}
+
+<div class="row justify-content-center mb-4">
+  <div class="col-md-12 text-center">
+    <h2 class="text-center text-uppercase">
+      <hr/>
+    </h2>
+  </div>
+</div> 
+
+{% if lista_empleados %}
+<div class="table-responsive">
+  <table class="table">
+    <caption style="caption-side: top; font-size: 24px; text-align: center;">
+        Lista de Empleados
+      </caption>
+    <thead>
+      <tr>
+        <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>Identificación</th>
+        <th>Sexo</th>
+        <th>Teléfono</th>
+        <th>Dirección</th>
+        <th>Email</th>
+        <th>Cargo</th>
+        <th>Salario</th>
+        <th>Contacto Emergencia</th>
+        <th>Tel. Emergencia</th>
+        <th class="text-center">Foto</th>
+        <th class="text-center">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for empleado in lista_empleados %}
+      <tr id="empleado_{{ empleado.id }}">
+        <td>{{ empleado.nombres_empleado }}</td>
+        <td>{{ empleado.apellidos_empleado }}</td>
+        <td>{{ empleado.identificacion }}</td>
+        <td>{{ empleado.sexo_empleado }}</td>
+        <td>{{ empleado.telefono_empleado }}</td>
+        <td>{{ empleado.direccion_empleado }}</td>
+        <td>{{ empleado.email_empleado }}</td>
+        <td>{{ empleado.cargo_empleado }}</td>
+        <td>{{ empleado.salario_empleado }}</td>
+        <td>{{ empleado.contacto_emergencia }}</td>
+        <td>{{ empleado.tel_emergencia }}</td>
+        <td class="text-center">
+            {% if empleado.foto_empleado %}
+            <!---->
+            {% if empleado.es_extension_valida %}
+            <img
+              class="foto_empleado"
+              src="{{ empleado.foto_empleado.url }}"
+              alt="Foto de {{ empleado.nombre_empleado }}"
+              width="50" />
+            {% else %}
+            <img
+              class="foto_empleado"
+              src="{% static 'media/fotos_empleados'%}"
+              alt="Sin foto"
+              width="50" />
+            {% endif %} {% endif %}
+          </td>
+          <td>
+            <span style="display: flex; justify-content: space-between">
+              <a
+                class="btn btn-success success_especial"
+                title="Editar datos del Empleado"
+                href="{% url 'editar_empleado' empleado.pk %}">
+                <i class="bi bi-arrow-clockwise"></i>
+              </a>
+              
+              {% csrf_token %}
+              <a 
+                class="btn btn-warning warning_especial"
+                title="Eliminar Empleado"
+                href="{% url 'eliminar_empleado' empleado.pk %}">
+                <i class="fas fa-trash" style="color:red;"></i>
+              </a>
+            </span>
+          </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <div class="relative border border-gray-100 bg-white p-6">
+
+        <h3 class="mt-4 text-lg font-medium text-gray-900">{{ empleado.name }}</h3>
+      
+        <form action="{% url "empleados" %}" class="mt-4" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="employ" value="{{empleado.id}}">
+          <button class="btn btn-outline-info">
+            Agregar empleado
+          </button>
+        </form> 
+      </div> 
+  </table>
+</div>
+{% else %}
+<p class="text-center">No hay empleados registrados 😭.</p>
+{% endif %} {% endblock %}
+
+{% block customJS %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+{% comment %} <script>
+  async function borrarEmpleado(idEmpleado) {
+    var confirmation = confirm(
+      "¿Estas seguro que deseas eliminar el empleado?"
+    );
+
+    if (confirmation) {
+      try {
+        let li = document.querySelector("#empleado_" + idEmpleado);
+
+        let csrfToken = "{{ csrf_token|escapejs }}";
+
+        // Realiza la solicitud POST utilizando Axios
+        const response = await axios({
+          method: "post",
+          url: "/eliminar-empleado/",
+          data: { idEmpleado },
+          headers: {
+            "X-CSRFToken": csrfToken,
+          },
+        });
+
+        console.log(response.data);
+        console.log(response.data.resultado);
+        if (response.data.resultado === 1) {
+          alerta("El empleado fue eliminado correctamente 😏", 1);
+          li.remove();
+        } else {
+          console.log("Error al intentar borrar el empleado");
+        }
+      } catch (error) {
+        console.error("Error al realizar la solicitud:", error);
+      }
+    }
+  }
+
+  function alerta(msj, tipo_msj) {
+    const divExistente = document.querySelector(".alert");
+    if (divExistente) {
+      divExistente.remove();
+    }
+
+    // Crear un nuevo div para la alerta
+    const divRespuesta = document.createElement("div");
+    divRespuesta.classList.add("col-md-11");
+
+    divRespuesta.innerHTML = `
+      <div class="alert ${
+        tipo_msj == 1 ? "alert-success" : "alert-danger"
+      }  alert-dismissible text-center" role="alert">
+        ${msj}
+      </div>
+  `;
+
+    setTimeout(function () {
+      divRespuesta.innerHTML = "";
+    }, 8000);
+
+    const container = document.querySelector(".row");
+    container.insertAdjacentElement("beforeend", divRespuesta);
+  }
+</script> {% endcomment %}
+
+{% comment %} <script>
+  function confirmarEliminacion(empleadoId) {
+      const confirmacion = confirm("¿Estás seguro de que deseas eliminar a este empleado?");
+      if (confirmacion) {
+          document.getElementById('form-borrar-' + empleadoId).submit();
+      }
+  }
+</script> {% endcomment %}
+<script>
+  function confirmarEliminacion(button) {
+    const url = button.getAttribute('data-url');
+    if (confirm('¿Estás seguro de que deseas eliminar este empleado?')) {
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+  
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({})  // Puedes agregar datos adicionales si es necesario
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('Empleado eliminado con éxito');
+          // Redirigir o actualizar la página
+          location.reload();
+        } else {
+          alert('Hubo un problema al eliminar el empleado');
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  }
+  
+</script>
+{% endblock %}

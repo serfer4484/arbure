@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}{% load static %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-center">Exportar Reporte de Empleados</h1>
+                    <hr />
+                    <body>
+                        <div class="container">
+                            <p>Haga clic en el botón a continuación para descargar el reporte en Excel con los datos de los empleados.</p>
+                            <form action="{% url 'descargarReporteEmpleados' %}" method="get">
+                                <button type="submit" class="btn btn-primary">Descargar Reporte</button>
+                            </form>
+                        </div>
+                    </body>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% comment %} <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+</html> {% endcomment %}
+

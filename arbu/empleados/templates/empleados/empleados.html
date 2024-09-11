@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %} 
+{% load static %}
+{% load crispy_forms_tags %}
+
+<div class="container-fluid"> <!-- Añadido un contenedor fluido para ocupar toda la pantalla -->
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8 mb-2"> <!-- Ajuste para hacerlo responsivo según el tamaño de pantalla -->
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-center text-uppercase">
+                        Datos del Empleado
+                        <hr />
+                    </h1>
+
+                    <form action="{% url 'empleados' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row"> <!-- Nueva fila para organizar el formulario -->
+                            <div class="col-12">
+                                {{ form|crispy }}
+                            </div>
+                        </div>
+                        <div class="text-center mt-4"> <!-- Centra los botones -->
+                            <button type="submit" class="btn btn-outline-primary">Agregar Empleado</button>
+                            <a href="{% url 'lista_empleado' %}" class="btn btn-outline-secondary">Volver a la lista</a>
+                        </div>
+                    </form>
+
+                    <div id="success-message" class="alert alert-success mt-3" style="display:none;">
+                        Empleado agregado exitosamente.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
